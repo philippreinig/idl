@@ -45,7 +45,7 @@ class MNISTDataset:
             if self.shuffle:
                 self.shuffle_train()
             self.current_pos = 0
-            print("Starting new epoch...")
+            #print("Starting new epoch...")
         return batch
 
     def shuffle_train(self):

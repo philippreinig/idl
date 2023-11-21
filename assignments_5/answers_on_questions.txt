@@ -1,0 +1,38 @@
+Instead of padding to longest sentence
+- use batch padding
+  - put similar long sequences in one batch
+  - pad to the longest sequence in the batch
+  - therefore: custom dataset... generator with yield -> gets generated when it's needed
+    - then tf.data.Dataset.from_generator -> using output_signature to tell tf what to expect
+    - and then using .padded_batch() instead of -batch()
+  - next level: sorting the sequences by length using buckets
+    - train_data.bucket_by_sequence_length
+
+Truncating or removing long sequences?
+- when truncating you could remove the important part -> would be just noise
+- removing: throw away data (especially the biggest data source)
+
+avoiding one-hot-vectors
+- when multiplying one-hot-vector by matrix you would get the column out of the matrix
+  - don't need multiplication -> just take column out of matrix
+  - adjust a bit for batches...
+
+2 or 1 output units?
+- ...
+
+point in learning an initial state?
+- no point, because there is no useful bias when sentence starts
+
+pre or post padding?
+- pre padding so that the model doesn't need to remember so long
+
+averaging over states?
+- good for gradient flow & computation flow
+- probably good for learning in the beginning, but bad later, because the first word gives no real clue on the positive ness
+
+interesting hypothesis: posiitve reviews are shorter -> more padding increases positiveness & starting wiht negative assumption
+
+avoid computing padding
+- use masking (scalar bool tensor) -> encodes if padding
+
+
